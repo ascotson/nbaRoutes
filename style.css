@@ -105,6 +105,11 @@ html, body {
   width: 100%;
 }
 
+.teamBox {
+  width: 30%;
+  float: left;
+}
+
 .btn {
   background: rgba(0, 0, 0, 0.77);
   color: white;

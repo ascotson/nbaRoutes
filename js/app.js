@@ -8,18 +8,7 @@ app.config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
       .state('home', {
         url: '/',
         templateURL: 'js/home/homeTmpl.html',
-        controller: 'homeCtrl',
-        resolve: {
-          jazzData: function($stateParams, teamService){
-            return teamService.getTeamData('utahjazz');
-          },
-          lakersData: function($stateParams, teamService){
-            return teamService.getTeamData('losangeleslakers');
-          },
-          heatData: function($stateParams, teamService){
-            return teamService.getTeamData('miamiheat');
-          }
-        }
+        controller: 'homeCtrl'
       })
 
       .state('teams', {
