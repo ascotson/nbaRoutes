@@ -1,9 +1,8 @@
-var app = angular.module('nbaRoutes');
-
-app.service('teamService', function ($http, $q) {
+angular.module('nbaRoutes')
+  .service('teamService', function ($http, $q) {
 
   this.addNewGame = function(gameObj) {
-    var url = 'https://api.parse.com/1/classes/ + gameObj.homeTeam';
+    var url = 'https://api.parse.com/1/classes/' + gameObj.homeTeam;
     if(parseInt(gameObj.homeTeamScore) > parseInt(gameObj.opponentScore)) {
       gameObj.won = true;
     }
@@ -12,17 +11,17 @@ app.service('teamService', function ($http, $q) {
       }
     return $http({
       method: 'POST',
-      URL: url,
+      url: url,
       data: gameObj
     });
   };
 
   this.getTeamData = function(team) {
     var deferred = $q.defer();
-    var url = 'https://api.parse.com/1/classes/ + team';
+    var url = 'https://api.parse.com/1/classes/' + team;
     $http({
       method: 'GET',
-      url: url,
+      url: url
     }).then(function(data) {
       var results = data.data.results;
       var wins = 0;
@@ -30,13 +29,13 @@ app.service('teamService', function ($http, $q) {
       for(var i = 0; i < results.length; i++) {
         if(results[i].won) {
           wins++;
-        } else if (!results[i].won) {
+        } else if(!results[i].won) {
           losses++;
         }
       }
       results.wins = wins;
       results.losses = losses;
-      deferred.resolve(results);
+      deferred.resolve(results);  //Is this the correct syntax for resolving our deferred object with the results array?
     },
     function(error) {
       deferred.reject(error);

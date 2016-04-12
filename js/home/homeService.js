@@ -27,7 +27,7 @@ app.service('homeService', function($q, teamService){
 
   this.getAllTeamData = function() {
     getTeamData('utahjazz');
-    getTeamData('logangeleslakers');
+    getTeamData('losangeleslakers');
     getTeamData('miamiheat');
     return teams;
   };

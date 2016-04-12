@@ -2,6 +2,14 @@ var app = angular.module('nbaRoutes');
 // the resolved data from the router needs to be injected into the controller
 app.controller('teamCtrl', function ($scope, $stateParams, teamService, teamData) {
 
+  $scope.teamData = teamData;
+  $scope.newGame = {};
+  $scope.showNewGameForm = false;
+
+  $scope.toggleNewGameForm = function()  {
+    $scope.showNewGameForm = !$scope.showNewGameForm;
+    };
+
   var team = $stateParams.team;
   if (team === 'utahjazz') {
     $scope.homeTeam = 'Utah Jazz';
@@ -14,24 +22,14 @@ app.controller('teamCtrl', function ($scope, $stateParams, teamService, teamData
     $scope.logoPath = 'images/heat-logo.png';
   }
 
-  $scope.teamData = teamData;
-  $scope.newGame = {};
-
-  $scope.showNewGameForm = false;
-  $scope.toggleNewGameForm = function()  {
-    $scope.showNewGameForm = !$scope.showNewGameForm;
-    };
-
   $scope.submitGame = function() {
     $scope.newGame.homeTeam = $scope.homeTeam.split(' ').join('').toLowerCase();
     teamService.addNewGame($scope.newGame)
-    .then(
-      function(result) {
-        return teamService.getTeamData($scope.newGame.homeTeam);
+    .then(function() {
+        teamService.getTeamData($scope.newGame.homeTeam);
       }
     )
-    .then(
-      function(response) {
+    .then(function(response) {
         $scope.teamData = response;
         $scope.newGame = {};
         $scope.showNewGameForm = false;
