@@ -9,18 +9,17 @@
       <h1> Wins: {{teamData.wins}} Losses: {{teamData.losses}} </h1>
   </div>
 
-  <div class="btn" ng-click="toggleNewGameForm()"> Add a New Game </div>
+  <button class="btn" ng-click="toggleNewGameForm()"> Add a New Game </button>
 
   <form ng-show="showNewGameForm" class="form">
-
     <span class="large"> Opponent: </span> <br />
-    <select ng-model="opponent" ng-options="team for team in teams" class="form-control" required name="team"></select> <br />
+    <select ng-model="opponent" ng-options="team for team in teams" class="form-control" required name="team"></select><br />
     <span class="large"> Score: </span> <br />
     Home Team Score:
-    <input class="inputs" type="text" ng-model="homeTeamScore" placeholder="Home Score"> 
+    <input class="inputs" type="text" ng-model="homeTeamScore" placeholder="Home Score">
     Opponent Score:
     <input class="inputs" type="text" ng-model="opponentScore" placeholder="Opponent Score"> <br />
-    <button ng-click="submitGame()"> Submit Game </button>
+    <button ng-click="addGame()"> Submit Game </button>
   </form>
 
   <div class="team-data">

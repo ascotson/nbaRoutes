@@ -2,15 +2,8 @@ var app = angular.module('nbaRoutes');
 // the resolved data from the router needs to be injected into the controller
 app.controller('teamCtrl', function ($scope, $stateParams, teamService, teamData) {
 
-  $scope.teamData = teamData;
-  $scope.newGame = {};
-  $scope.showNewGameForm = false;
-
-  $scope.toggleNewGameForm = function()  {
-    $scope.showNewGameForm = !$scope.showNewGameForm;
-    };
-
   var team = $stateParams.team;
+
   if (team === 'utahjazz') {
     $scope.homeTeam = 'Utah Jazz';
     $scope.logoPath = 'images/jazz-logo.png';
@@ -21,19 +14,30 @@ app.controller('teamCtrl', function ($scope, $stateParams, teamService, teamData
     $scope.homeTeam = 'Miami Heat';
     $scope.logoPath = 'images/heat-logo.png';
   }
+  console.log(teamData);
+  $scope.teamData = teamData;
 
-  $scope.submitGame = function() {
-    $scope.newGame.homeTeam = $scope.homeTeam.split(' ').join('').toLowerCase();
-    teamService.addNewGame($scope.newGame)
-    .then(function() {
-        teamService.getTeamData($scope.newGame.homeTeam);
-      }
-    )
-    .then(function(response) {
-        $scope.teamData = response;
-        $scope.newGame = {};
-        $scope.showNewGameForm = false;
-      }
-    );
+  $scope.showNewGameForm = false;
+
+  $scope.toggleNewGameForm = function()  {
+    $scope.showNewGameForm = !$scope.showNewGameForm;
+    };
+
+  $scope.addGame = function() {
+    var newGame = {
+      homeTeam: $stateParams.team,
+      homeTeamScore: $scope.homeTeamScore,
+      opponentScore: $scope.opponentScore
+    };
+    teamService.addNewGame(newGame)
+      .then(function(response){
+        console.log('POST success!');
+      }, function(err){
+          console.log('POST fail!');
+      });
+    $scope.homeTeamScore = "";
+    $scope.opponentScore = "";
+    $scope.showNewGameForm = false;
   };
+
 });

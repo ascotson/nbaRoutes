@@ -1,6 +1,7 @@
 var app = angular.module('nbaRoutes');
 
 app.service('homeService', function($q, teamService){
+  
   var teams = {
     'utahjazz': {
       homeTeam: 'Utah Jazz',
@@ -20,7 +21,7 @@ app.service('homeService', function($q, teamService){
     teamService.getTeamData(team)
     .then(
       function(result) {
-        teams[team].teamData = result;
+        teams[team].teamData = result; //this teamData object is NOT the same as the teamData method on the 'teams' state resolve that is passed into the 'teamCtrl' controller, even though both use 'teamService' to obtain their data from parse.
       }
     );
   };
